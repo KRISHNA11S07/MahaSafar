@@ -1,0 +1,189 @@
+/* =========================================
+   Hero Section — Cinematic Photography Opening
+   ========================================= */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0A0908;
+}
+
+/* Real Photography Background */
+.hero__photo-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  filter: saturate(1.1) brightness(0.82);
+}
+
+/* Layered subtle dark gradient to ensure text readability without hiding the photo */
+.hero__photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(10, 9, 8, 0.25) 0%,
+      rgba(10, 9, 8, 0.75) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10, 9, 8, 0.6) 0%,
+      transparent 30%,
+      transparent 70%,
+      #0A0908 100%
+    );
+}
+
+.hero__photo-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Photography Location Badge */
+.hero__photo-badge {
+  position: absolute;
+  bottom: 24px;
+  right: var(--container-pad);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: rgba(245, 240, 235, 0.7);
+  background: rgba(10, 9, 8, 0.65);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.03em;
+}
+
+/* Content Container */
+.hero__content {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--container-pad);
+  max-width: 900px;
+}
+
+/* Watermark */
+.hero__logo {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-earth);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+  opacity: 0.9;
+}
+
+/* SVG Map Overlay */
+.hero__map {
+  width: 220px;
+  height: 170px;
+  margin-bottom: -40px;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.3));
+}
+
+/* Main Title */
+.hero__title {
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-none);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin-bottom: var(--space-4);
+}
+
+/* Tagline */
+.hero__tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-style: italic;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-8);
+  max-width: 600px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Button */
+.hero__cta {
+  margin-bottom: var(--space-12);
+}
+
+.hero__button {
+  display: inline-block;
+  padding: 0.85rem 2.2rem;
+  background: var(--color-earth);
+  color: var(--color-bg-primary);
+  border: 1px solid var(--color-earth);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wider);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
+}
+
+.hero__button:hover {
+  background: var(--color-earth-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(201, 169, 110, 0.45);
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-secondary);
+}
+
+.hero__scroll-text {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: rgba(245, 240, 235, 0.7);
+}
+
+.hero__scroll-icon {
+  color: var(--color-earth);
+}
+
+@media (max-width: 768px) {
+  .hero__photo-badge {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.65rem;
+  }
+}

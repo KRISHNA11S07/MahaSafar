@@ -1,0 +1,389 @@
+/* =========================================
+   Trip Planner Page Styles
+   ========================================= */
+
+.planner-page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  padding-bottom: var(--space-20);
+}
+
+.planner-header {
+  padding: calc(var(--navbar-height) + var(--space-8)) 0 var(--space-10);
+  border-bottom: 1px solid var(--color-border);
+  background: radial-gradient(circle at 50% 0%, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+}
+
+.planner-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-ui);
+}
+
+.planner-breadcrumbs a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.planner-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-earth);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-2);
+}
+
+.planner-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.planner-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  max-width: 680px;
+}
+
+.planner-container {
+  margin-top: var(--space-10);
+}
+
+.planner-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+/* Form Card */
+.planner-form-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+
+.planner-section-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  margin-bottom: var(--space-6);
+  color: var(--color-text-primary);
+}
+
+.planner-field {
+  margin-bottom: var(--space-5);
+}
+
+.planner-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-family: var(--font-ui);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-2);
+}
+
+.planner-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.planner-select:focus {
+  border-color: var(--color-earth);
+}
+
+.planner-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.planner-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem;
+}
+
+.planner-stepper-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.planner-stepper-btn:hover {
+  background: var(--color-earth);
+  color: var(--color-bg-primary);
+}
+
+.planner-stepper-val {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-family: var(--font-ui);
+}
+
+.planner-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.planner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.planner-pill:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.planner-pill--active {
+  background: rgba(201, 169, 110, 0.15);
+  border-color: var(--color-earth);
+  color: var(--color-earth);
+  font-weight: 600;
+}
+
+/* Cost Estimation Card */
+.planner-cost-card {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-4));
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cost-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.cost-kicker {
+  font-size: var(--text-xs);
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-tertiary);
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.cost-grand-total {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--color-earth);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+
+.cost-per-person {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.cost-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.cost-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-xs);
+}
+
+.cost-item__label {
+  color: var(--color-text-secondary);
+}
+
+.cost-item__val {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.cost-guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.72rem;
+  color: var(--color-text-tertiary);
+  background: rgba(255, 255, 255, 0.02);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-6);
+}
+
+.cost-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cost-btn {
+  width: 100%;
+}
+
+.cost-dest-link {
+  text-align: center;
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+}
+
+.cost-dest-link a {
+  color: var(--color-earth);
+  text-decoration: none;
+}
+
+/* Generated Itinerary Section */
+.planner-itinerary-section {
+  margin-top: var(--space-16);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-12);
+}
+
+.planner-itinerary-header {
+  margin-bottom: var(--space-8);
+}
+
+.planner-itinerary-days {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.itinerary-day-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.itinerary-day-card__header {
+  background: var(--color-bg-tertiary);
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.itinerary-day-badge {
+  background: var(--color-earth);
+  color: var(--color-bg-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.itinerary-day-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--color-text-primary);
+}
+
+.itinerary-events-list {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.itinerary-evt {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.itinerary-evt__time {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--color-earth);
+  font-weight: 600;
+}
+
+.itinerary-evt__title {
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.itinerary-evt__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.planner-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-8);
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .planner-grid {
+    grid-template-columns: 1fr;
+  }
+  .planner-cost-card {
+    position: static;
+  }
+}

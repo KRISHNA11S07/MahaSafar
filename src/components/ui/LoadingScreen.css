@@ -1,0 +1,64 @@
+/* =========================================
+   Loading Screen
+   ========================================= */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary);
+}
+
+.loading-screen__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.loading-screen__map {
+  width: 80px;
+  height: 64px;
+  opacity: 0.6;
+}
+
+.loading-screen__path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: drawMap 2.5s ease-in-out infinite;
+}
+
+@keyframes drawMap {
+  0% {
+    stroke-dashoffset: 800;
+    opacity: 0.3;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -800;
+    opacity: 0.3;
+  }
+}
+
+.loading-screen__text {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-tertiary);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen__path {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+}
