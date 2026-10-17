@@ -23,6 +23,12 @@ export interface GeoPoint {
   coordinates: [number, number]; // [lng, lat]
 }
 
+export interface LiveLocation {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+}
+
 // ---- District ----
 export interface District {
   _id: string;

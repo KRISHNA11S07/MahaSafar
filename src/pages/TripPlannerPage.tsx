@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Users,
@@ -35,6 +35,12 @@ export default function TripPlannerPage() {
   const [selectedDestSlug, setSelectedDestSlug] = useState<string>(
     destinationSlug || sampleDestinations[0].slug
   );
+
+  useEffect(() => {
+    if (destinationSlug) {
+      setSelectedDestSlug(destinationSlug);
+    }
+  }, [destinationSlug]);
   const [originCity, setOriginCity] = useState('Pune');
   const [travelers, setTravelers] = useState(2);
   const [days, setDays] = useState(2);

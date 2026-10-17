@@ -36,7 +36,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="navbar__links">
-          <Link to="/" className="navbar__link">
+          <Link to="/explore" className="navbar__link">
             <MapPin size={14} />
             <span>Explore</span>
           </Link>
@@ -67,7 +67,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       <div className={`navbar__mobile ${isMobileOpen ? 'navbar__mobile--open' : ''}`} role="dialog" aria-label="Mobile navigation">
         <div className="navbar__mobile-inner">
-          <Link to="/" className="navbar__mobile-link">Explore Maharashtra</Link>
+          <Link to="/explore" className="navbar__mobile-link">Explore Maharashtra</Link>
           <Link to="/search" className="navbar__mobile-link">Discover</Link>
           <Link to="/plan" className="navbar__mobile-link">Plan Trip</Link>
           <div className="navbar__mobile-divider" />

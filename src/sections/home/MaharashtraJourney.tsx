@@ -23,7 +23,14 @@ export default function MaharashtraJourney() {
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion) {
+      const routePath = sectionRef.current?.querySelector<SVGPathElement>('.journey-map__route');
+      if (routePath) {
+        routePath.style.strokeDasharray = 'none';
+        routePath.style.strokeDashoffset = '0';
+      }
+      return;
+    }
 
     // Pin the map & visual viewport during the scroll journey
     ScrollTrigger.create({
@@ -98,12 +105,16 @@ export default function MaharashtraJourney() {
       }
     });
 
-    // Route line animation synced with scroll
-    const routePath = sectionRef.current?.querySelector('.journey-map__route');
+    // Route line animation synced with scroll across the complete circular path
+    const routePath = sectionRef.current?.querySelector<SVGPathElement>('.journey-map__route');
     if (routePath) {
+      const pathLength = Math.ceil(routePath.getTotalLength() || 600);
+      routePath.style.strokeDasharray = `${pathLength}`;
+      routePath.style.strokeDashoffset = `${pathLength}`;
+
       gsap.fromTo(
         routePath,
-        { strokeDashoffset: 1200 },
+        { strokeDashoffset: pathLength },
         {
           strokeDashoffset: 0,
           ease: 'none',
@@ -112,6 +123,7 @@ export default function MaharashtraJourney() {
             start: 'top top',
             end: 'bottom bottom',
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         }
       );
@@ -162,17 +174,18 @@ export default function MaharashtraJourney() {
                 fill="rgba(10, 9, 8, 0.45)"
               />
 
-              {/* Route line through Maharashtra */}
+              {/* Route line through Maharashtra forming complete circle through all cities */}
               <path
                 className="journey-map__route"
-                d="M130 175 L155 160 L175 148 L195 135 L200 110 L215 95 L245 85 L270 95 L295 115 L310 140"
+                d="M130 175 L155 160 L175 148 L195 135 L200 110 L215 95 L245 85 L270 95 L295 115 L310 140 L285 175 L245 200 L195 215 L140 220 L115 250 L112 215 L130 175 Z"
                 stroke="var(--color-earth)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
-                strokeDasharray="1200"
-                strokeDashoffset="1200"
+                strokeLinejoin="round"
+                strokeDasharray="600"
+                strokeDashoffset="600"
                 fill="none"
-                opacity="0.85"
+                opacity="0.9"
               />
 
               {/* District markers */}

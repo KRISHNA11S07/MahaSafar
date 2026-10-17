@@ -12,7 +12,6 @@ export default function HeroSection() {
   const mapRef = useRef<SVGSVGElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -54,12 +53,6 @@ export default function HeroSection() {
         { opacity: 0, y: 15 },
         { opacity: 1, y: 0, duration: 0.5 },
         '-=0.3'
-      )
-      .fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.4 },
-        '-=0.1'
       )
       .fromTo(
         scrollRef.current,
@@ -145,13 +138,6 @@ export default function HeroSection() {
         <p className="hero__tagline" ref={taglineRef}>
           An epic journey through mountains, sea forts, and sacred trails.
         </p>
-
-        {/* CTA */}
-        <div className="hero__cta" ref={ctaRef}>
-          <a href="#journey" className="hero__button">
-            EXPLORE THE JOURNEY
-          </a>
-        </div>
 
         {/* Scroll Indicator */}
         <div className="hero__scroll" ref={scrollRef}>

@@ -1,9 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation, MapPin, Clock, ArrowRight, Compass } from 'lucide-react';
 import { sampleDestinations } from '../../data/destinations';
 import { getDestinationImage } from '../../data/images';
 import SafeImage from '../../components/ui/SafeImage';
+import type { LiveLocation } from '../../types';
 import './ExploreNearMe.css';
 
 // Pre-defined base locations across Maharashtra with coordinates
@@ -31,11 +32,23 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   return Math.round(R * c);
 }
 
-export default function ExploreNearMe() {
+interface ExploreNearMeProps {
+  liveLocation: LiveLocation | null;
+}
+
+export default function ExploreNearMe({ liveLocation }: ExploreNearMeProps) {
   const [selectedCity, setSelectedCity] = useState(BASE_CITIES[0]);
   const [isLocating, setIsLocating] = useState(false);
   const [userLocationName, setUserLocationName] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!liveLocation) return;
+    setUserLocationName('My GPS Location');
+    setSelectedCity({
+      name: 'My GPS Location',
+      coords: [liveLocation.longitude, liveLocation.latitude],
+    });
+  }, [liveLocation]);
   const handleUseGeo = () => {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser.');

@@ -9,6 +9,7 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const DestinationPage = lazy(() => import('./pages/DestinationPage'));
 const DistrictPage = lazy(() => import('./pages/DistrictPage'));
 const TripPlannerPage = lazy(() => import('./pages/TripPlannerPage'));
+const ExplorePage = lazy(() => import('./pages/ExplorePage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage'));
@@ -22,16 +23,18 @@ function App() {
       <main>
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/destination/:slug" element={<DestinationPage />} />
-            <Route path="/district/:slug" element={<DistrictPage />} />
-            <Route path="/plan" element={<TripPlannerPage />} />
-            <Route path="/plan/:destinationSlug" element={<TripPlannerPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="*" element={<NotFoundPage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/destination/:slug" element={<DestinationPage />} />
+              <Route path="/district/:slug" element={<DistrictPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/explore/:destinationSlug" element={<ExplorePage />} />
+              <Route path="/plan" element={<TripPlannerPage />} />
+              <Route path="/plan/:destinationSlug" element={<TripPlannerPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </main>

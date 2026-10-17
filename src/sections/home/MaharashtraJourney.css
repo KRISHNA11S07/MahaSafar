@@ -91,6 +91,11 @@
   filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.8));
 }
 
+.journey-map__route {
+  filter: drop-shadow(0 0 6px rgba(201, 169, 110, 0.7));
+  will-change: stroke-dashoffset;
+}
+
 .journey-map__marker {
   transition: r 0.3s ease, filter 0.3s ease;
   filter: drop-shadow(0 0 4px rgba(201, 169, 110, 0.8));
