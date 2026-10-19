@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, MapPin, Compass, ShieldAlert, ArrowRight, Camera } from 'lucide-react';
+import { Mountain, MapPin, Compass, ShieldAlert, ArrowRight, Camera } from 'lucide-react';
 import { sampleHiddenSpots } from '../../data/hiddenSpots';
 import { getHiddenSpotImage } from '../../data/images';
 import SafeImage from '../../components/ui/SafeImage';
@@ -49,14 +49,14 @@ export default function HiddenMaharashtra() {
         {/* Header */}
         <div className="hidden-maharashtra__header">
           <div className="hidden-maharashtra__tag">
-            <Sparkles size={16} />
-            <span>Off The Beaten Path</span>
+            <Mountain size={16} />
+            <span>Locals' favourites</span>
           </div>
           <h2 className="text-section hidden-maharashtra__title">
             Hidden Maharashtra
           </h2>
           <p className="hidden-maharashtra__subtitle">
-            Uncrowded beaches, slot canyons, and luminous valleys known mostly to locals and seasoned explorers.
+            Quiet beaches, hidden canyons and misty valleys that mostly locals and seasoned trekkers know about.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export default function HiddenMaharashtra() {
                   </div>
 
                   <div className="hidden-card__why">
-                    <span className="hidden-card__why-label">Why Go:</span> {spot.whyVisit}
+                    <span className="hidden-card__why-label">Why it's worth it:</span> {spot.whyVisit}
                   </div>
 
                   {spot.safetyNote && (

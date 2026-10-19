@@ -56,7 +56,7 @@
       rgba(10, 9, 8, 0.45) 0%,
       rgba(10, 9, 8, 0.85) 100%
     ),
-    linear-gradient(180deg, rgba(10, 9, 8, 0.3) 0%, #0A0908 100%);
+    linear-gradient(180deg, rgba(10, 9, 8, 0.3) 0%, var(--color-bg-primary) 100%);
 }
 
 .journey-photo-backdrop__meta {
@@ -254,7 +254,7 @@
 .journey-chapter__card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 65%, rgba(21, 20, 18, 0.95) 100%);
+  background: linear-gradient(90deg, transparent 65%, color-mix(in srgb, var(--color-bg-secondary) 95%, transparent) 100%);
 }
 
 .journey-chapter__card-district-badge {

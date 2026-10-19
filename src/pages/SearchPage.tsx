@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Search, X, MapPin, ArrowRight, Sparkles } from 'lucide-react';
+import { Search, X, MapPin, ArrowRight, Compass } from 'lucide-react';
 import { sampleDestinations, priorityDistricts } from '../data/destinations';
 import { categories } from '../data/categories';
 import { regions } from '../data/regions';
@@ -59,12 +59,12 @@ export default function SearchPage() {
       <header className="search-header">
         <div className="container search-header__container">
           <span className="search-header__tag">
-            <Sparkles size={14} />
-            <span>Directory & Discovery</span>
+            <Compass size={14} />
+            <span>Browse everywhere</span>
           </span>
-          <h1 className="search-header__title">Find Your Next Destination</h1>
+          <h1 className="search-header__title">Where to next?</h1>
           <p className="search-header__subtitle">
-            Search across Maharashtra&apos;s 36 districts, coastal shores, Sahyadri forts, and wildlife reserves.
+            Search across Maharashtra&apos;s 36 districts: beaches, Sahyadri forts, wildlife reserves and everything in between.
           </p>
 
           {/* Search Bar Input */}

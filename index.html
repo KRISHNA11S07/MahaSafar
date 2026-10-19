@@ -2,10 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/MahaSafar/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="MahaSafar — A visual and interactive way to discover Maharashtra, find destinations that match your interests, uncover hidden gems, and turn inspiration into a practical trip plan." />
     <meta name="theme-color" content="#0A0908" />
+    <!-- Apply the saved theme before first paint so there is no dark/light flash -->
+    <script>
+      try {
+        var t = localStorage.getItem('mahasafar_theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+          document.documentElement.style.colorScheme = t;
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    </script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

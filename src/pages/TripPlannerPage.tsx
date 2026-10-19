@@ -10,7 +10,7 @@ import {
   Check,
   Bookmark,
   Printer,
-  Sparkles,
+  Backpack,
   ChevronRight,
   ShieldCheck,
   Info,
@@ -249,12 +249,12 @@ export default function TripPlannerPage() {
 
           <div className="planner-header__content">
             <div className="planner-tag">
-              <Sparkles size={16} />
-              <span>Personalized Travel Engine</span>
+              <Backpack size={16} />
+              <span>Trip planner</span>
             </div>
-            <h1 className="planner-title">Plan Your Maharashtra Journey</h1>
+            <h1 className="planner-title">Plan your trip</h1>
             <p className="planner-subtitle">
-              Transparent cost estimates, customized pacing, and interactive day-by-day itineraries tailored to your style.
+              Tell us where you're headed and how you like to travel. You'll get honest cost estimates and a day-by-day plan to start from.
             </p>
           </div>
         </div>

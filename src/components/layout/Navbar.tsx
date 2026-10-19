@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, User, MapPin } from 'lucide-react';
+import ThemeToggle from '../ui/ThemeToggle';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -51,6 +52,12 @@ export default function Navbar() {
             <User size={14} />
             <span>Login</span>
           </Link>
+          <ThemeToggle />
+        </div>
+
+        {/* Theme toggle for small screens (the desktop one lives in the links) */}
+        <div className="navbar__mobile-actions">
+          <ThemeToggle />
         </div>
 
         {/* Mobile Toggle */}
@@ -72,7 +79,7 @@ export default function Navbar() {
           <Link to="/plan" className="navbar__mobile-link">Plan Trip</Link>
           <div className="navbar__mobile-divider" />
           <Link to="/login" className="navbar__mobile-link">Login</Link>
-          <Link to="/register" className="navbar__mobile-link">Create Account</Link>
+          <Link to="/register" className="navbar__mobile-link">Sign up</Link>
         </div>
       </div>
     </header>

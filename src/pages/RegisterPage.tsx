@@ -22,14 +22,14 @@ export default function RegisterPage() {
       <div className="auth-page__glow" />
       <div className="auth-card">
         <div className="auth-header">
-          <span className="auth-tag">Join MahaSafar</span>
-          <h1 className="auth-title">Create Account</h1>
-          <p className="auth-subtitle">Save custom routes, bookmark secret locations, and track travel goals.</p>
+          <span className="auth-tag">Welcome</span>
+          <h1 className="auth-title">Create your account</h1>
+          <p className="auth-subtitle">Save your routes, bookmark hidden spots and keep a list of places you want to see.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="auth-field">
-            <label className="auth-label">Full Name</label>
+            <label className="auth-label">Your name</label>
             <input
               type="text"
               required
@@ -41,7 +41,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="auth-field">
-            <label className="auth-label">Email Address</label>
+            <label className="auth-label">Email</label>
             <input
               type="email"
               required
@@ -66,14 +66,14 @@ export default function RegisterPage() {
 
           <button type="submit" className="btn btn--primary auth-submit-btn">
             <UserPlus size={16} />
-            <span>Join MahaSafar</span>
+            <span>Create account</span>
           </button>
         </form>
 
         <div className="auth-footer">
           <span>Already have an account?</span>
           <Link to="/login" className="auth-link">
-            Sign In <ArrowRight size={12} style={{ display: 'inline' }} />
+            Sign in <ArrowRight size={12} style={{ display: 'inline' }} />
           </Link>
         </div>
       </div>

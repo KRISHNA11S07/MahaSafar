@@ -152,7 +152,7 @@
 .near-card__photo-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 9, 8, 0.2) 0%, rgba(21, 20, 18, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(10, 9, 8, 0.2) 0%, color-mix(in srgb, var(--color-bg-secondary) 75%, transparent) 100%);
 }
 
 .near-card__region-badge {

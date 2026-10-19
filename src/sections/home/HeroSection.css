@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #0A0908;
+  background: #0A0908; /* photo backdrop stays dark in both themes */
 }
 
 /* Real Photography Background */
@@ -45,7 +45,7 @@
       rgba(10, 9, 8, 0.6) 0%,
       transparent 30%,
       transparent 70%,
-      #0A0908 100%
+      var(--color-bg-primary) 100%
     );
 }
 

@@ -4,6 +4,7 @@ import { User, Bookmark, LogOut, Compass, Calendar, ArrowRight, Camera } from 'l
 import { sampleDestinations } from '../data/destinations';
 import { getDestinationImage } from '../data/images';
 import SafeImage from '../components/ui/SafeImage';
+import { supabase } from '../lib/supabase';
 import './ProfilePage.css';
 
 interface SavedTripItem {
@@ -38,6 +39,7 @@ export default function ProfilePage() {
   }, []);
 
   const handleLogout = () => {
+    void supabase?.auth.signOut();
     localStorage.removeItem('mahasafar_user');
     setUser(null);
     navigate('/');
@@ -54,8 +56,9 @@ export default function ProfilePage() {
           <h1 className="profile-name">{user?.name || 'Explorer'}</h1>
           <p className="profile-email">{user?.email || 'Guest Session'}</p>
           <div className="profile-badges">
-            <span className="profile-badge">Maharashtra Traveler</span>
-            <span className="profile-badge">Sahyadri Enthusiast</span>
+            <span className="profile-badge">
+              {user?.email === 'explorer@mahasafar.in' ? 'Guest explorer' : 'MahaSafar member'}
+            </span>
           </div>
         </div>
         <button onClick={handleLogout} className="profile-logout-btn" title="Sign Out">

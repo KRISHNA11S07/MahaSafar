@@ -1,11 +1,15 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogIn, ArrowRight } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
+import GoogleIcon from '../components/ui/GoogleIcon';
+import { supabase, getOAuthRedirectUrl } from '../lib/supabase';
 import './Auth.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [notice, setNotice] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
@@ -24,22 +28,64 @@ export default function LoginPage() {
     navigate('/profile');
   };
 
+  const handleGoogle = async () => {
+    setNotice('');
+    if (!supabase) {
+      setNotice("Google sign-in isn't switched on for this site yet. You can use email or the guest option for now.");
+      return;
+    }
+    setGoogleLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: getOAuthRedirectUrl() },
+    });
+    if (error) {
+      setGoogleLoading(false);
+      setNotice("We couldn't reach Google just now. Please try again in a moment.");
+    }
+    // On success the browser is redirected to Google, so there's nothing more to do here.
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-page__glow" />
       <div className="auth-card">
         <div className="auth-header">
-          <span className="auth-tag">Welcome Back</span>
-          <h1 className="auth-title">Sign In</h1>
-          <p className="auth-subtitle">Access your saved itineraries, hidden gems, and travel history.</p>
+          <span className="auth-tag">Good to see you again</span>
+          <h1 className="auth-title">Sign in</h1>
+          <p className="auth-subtitle">
+            Pick up where you left off. Your saved trips and hidden spots are right where you left them.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="auth-google-btn"
+          onClick={handleGoogle}
+          disabled={googleLoading}
+        >
+          <GoogleIcon />
+          <span>{googleLoading ? 'Opening Google…' : 'Continue with Google'}</span>
+        </button>
+
+        {notice && (
+          <p className="auth-notice" role="status">
+            {notice}
+          </p>
+        )}
+
+        <div className="auth-divider" role="separator">
+          <span>or use your email</span>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="auth-field">
-            <label className="auth-label">Email Address</label>
+            <label className="auth-label" htmlFor="login-email">Email</label>
             <input
+              id="login-email"
               type="email"
               required
+              autoComplete="email"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -48,11 +94,13 @@ export default function LoginPage() {
           </div>
 
           <div className="auth-field">
-            <label className="auth-label">Password</label>
+            <label className="auth-label" htmlFor="login-password">Password</label>
             <input
+              id="login-password"
               type="password"
               required
-              placeholder="••••••••"
+              autoComplete="current-password"
+              placeholder="Your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="auth-input"
@@ -61,22 +109,19 @@ export default function LoginPage() {
 
           <button type="submit" className="btn btn--primary auth-submit-btn">
             <LogIn size={16} />
-            <span>Sign In</span>
+            <span>Sign in</span>
           </button>
 
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            className="auth-demo-btn"
-          >
-            Quick Guest / Demo Sign In &rarr;
+          <button type="button" onClick={handleDemoLogin} className="auth-demo-btn">
+            Just looking around? Try it as a guest
           </button>
         </form>
 
         <div className="auth-footer">
-          <span>Don&apos;t have an account?</span>
-          <Link to="/register" className="auth-link">
-            Create one <ArrowRight size={12} style={{ display: 'inline' }} />
+          <span>New to MahaSafar?</span>
+          <Link to="/register" className="auth-signup-btn">
+            <UserPlus size={15} />
+            <span>Sign up</span>
           </Link>
         </div>
       </div>

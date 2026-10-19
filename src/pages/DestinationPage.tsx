@@ -11,7 +11,7 @@ import {
   Share2,
   Check,
   ChevronRight,
-  Sparkles,
+  Compass,
   Bed,
   Utensils,
   Camera,
@@ -69,10 +69,10 @@ export default function DestinationPage() {
     return (
       <div className="destination-not-found container">
         <div className="destination-not-found__card">
-          <Sparkles size={36} className="text-earth" />
-          <h1 className="destination-not-found__title">Destination Not Found</h1>
+          <Compass size={36} className="text-earth" />
+          <h1 className="destination-not-found__title">We can't find that place</h1>
           <p className="destination-not-found__desc">
-            We couldn&apos;t find details for &ldquo;{slug}&rdquo;. Explore our other handpicked Maharashtra destinations below.
+            We couldn&apos;t find details for &ldquo;{slug}&rdquo;. Have a look at some of our other Maharashtra destinations below.
           </p>
           <div className="destination-not-found__actions">
             <Link to="/" className="btn btn--primary">
@@ -178,8 +178,8 @@ export default function DestinationPage() {
 
             {destination.featured && (
               <span className="dest-hero__featured-pill">
-                <Sparkles size={12} />
-                <span>Featured Experience</span>
+                <Compass size={12} />
+                <span>Editor's pick</span>
               </span>
             )}
           </div>

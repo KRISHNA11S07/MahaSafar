@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import LoadingScreen from './components/ui/LoadingScreen';
+import { useAuthSync } from './lib/useAuthSync';
 
 // Lazy-loaded pages for code splitting
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -17,6 +18,8 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 function App() {
+  useAuthSync();
+
   return (
     <div className="app">
       <Navbar />

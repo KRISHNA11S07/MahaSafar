@@ -50,12 +50,12 @@ export default function CategoryExplorer() {
     <section className="category-explorer section" ref={sectionRef} aria-label="Explore by category">
       <div className="container">
         <div className="category-explorer__header">
-          <span className="category-explorer__tag">Curated Collections</span>
+          <span className="category-explorer__tag">Start with what you love</span>
           <h2 className="text-section category-explorer__title">
             Where will you go next?
           </h2>
           <p className="category-explorer__subtitle">
-            Explore Maharashtra by landscapes, historic citadels, and rich cultural traditions.
+            Hill views, old forts, temple towns: pick a mood and we'll point you somewhere good.
           </p>
         </div>
 

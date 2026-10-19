@@ -96,13 +96,13 @@ export default function ExploreNearMe({ liveLocation }: ExploreNearMeProps) {
         <div className="explore-near-me__header">
           <div className="explore-near-me__tag">
             <Compass size={16} />
-            <span>Location Aware Discovery</span>
+            <span>Close to home</span>
           </div>
           <h2 className="text-section explore-near-me__title">
             Explore Near You
           </h2>
           <p className="explore-near-me__subtitle">
-            Find the closest weekend getaways, hill stations, and heritage monuments based on your starting location.
+            Weekend getaways, hill stations and heritage spots within easy reach of where you're starting from.
           </p>
 
           {/* Location Selector Bar */}

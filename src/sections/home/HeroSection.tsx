@@ -136,12 +136,12 @@ export default function HeroSection() {
 
         {/* Tagline */}
         <p className="hero__tagline" ref={taglineRef}>
-          An epic journey through mountains, sea forts, and sacred trails.
+          Sea forts, Sahyadri ridgelines and old pilgrim trails. Let's find your next weekend away.
         </p>
 
         {/* Scroll Indicator */}
         <div className="hero__scroll" ref={scrollRef}>
-          <span className="hero__scroll-text">SCROLL TO TRAVEL</span>
+          <span className="hero__scroll-text">Keep scrolling</span>
           <ChevronDown size={16} className="hero__scroll-icon" />
         </div>
       </div>

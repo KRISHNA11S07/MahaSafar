@@ -35,6 +35,14 @@
   --color-marathwada: #A67B5B;
   --color-vidarbha: #6B8E4E;
 
+  /* Surfaces that change with the theme */
+  --color-surface-glass: rgba(245, 240, 235, 0.04);
+  --color-earth-soft: rgba(201, 169, 110, 0.12);
+  --color-on-earth: #14110D;
+  --color-nav-bg: rgba(10, 9, 8, 0.88);
+  --color-nav-bg-heavy: rgba(10, 9, 8, 0.96);
+  --shadow-card: 0 15px 50px rgba(0, 0, 0, 0.5);
+
   /* Functional */
   --color-border: rgba(245, 240, 235, 0.08);
   --color-border-hover: rgba(245, 240, 235, 0.15);
@@ -126,6 +134,67 @@
   --z-toast: 300;
 }
 
+/* ---- Light theme ----
+   Warm paper tones instead of stark white, and a deeper gold so the
+   accent color stays readable on a light background. */
+:root[data-theme='light'] {
+  --color-bg-primary: #FAF6F0;
+  --color-bg-secondary: #F1EAE0;
+  --color-bg-tertiary: #E8DFD2;
+  --color-bg-cream: #EFE7DA;
+  --color-bg-cream-dark: #E2D7C6;
+
+  --color-text-primary: #231F1A;
+  --color-text-secondary: rgba(35, 31, 26, 0.72);
+  --color-text-tertiary: rgba(35, 31, 26, 0.5);
+
+  --color-earth: #8A6527;
+  --color-earth-light: #A27B36;
+  --color-konkan-blue: #2A5F9E;
+  --color-forest: #3F5C37;
+  --color-sahyadri: #4A7A41;
+  --color-stone: #7A5F3B;
+  --color-terracotta: #B24A2D;
+
+  --color-surface-glass: rgba(35, 31, 26, 0.04);
+  --color-earth-soft: rgba(138, 101, 39, 0.12);
+  --color-on-earth: #FFFFFF;
+  --color-nav-bg: rgba(250, 246, 240, 0.88);
+  --color-nav-bg-heavy: rgba(250, 246, 240, 0.97);
+  --shadow-card: 0 12px 36px rgba(60, 40, 10, 0.12);
+
+  --color-border: rgba(35, 31, 26, 0.12);
+  --color-border-hover: rgba(35, 31, 26, 0.22);
+  --color-border-active: rgba(35, 31, 26, 0.36);
+  --color-overlay: rgba(250, 246, 240, 0.75);
+  --color-overlay-heavy: rgba(250, 246, 240, 0.9);
+}
+
+/* Anything sitting on top of a photograph keeps the dark-theme text colors,
+   otherwise light-mode text would vanish into the image. */
+:root[data-theme='light'] :is(
+  .hero,
+  .journey-map,
+  .district-hero,
+  .dest-hero,
+  .hidden-card__image-container,
+  .near-card__image-wrap
+),
+/* The home page navbar floats over the hero photo until you scroll */
+:root[data-theme='light'] .navbar--transparent:not(.navbar--scrolled) .navbar__inner {
+  --color-text-primary: #F5F0EB;
+  --color-text-secondary: rgba(245, 240, 235, 0.72);
+  --color-text-tertiary: rgba(245, 240, 235, 0.45);
+  --color-earth: #D9BC82;
+  --color-on-earth: #14110D;
+  --color-border: rgba(245, 240, 235, 0.14);
+  --color-border-hover: rgba(245, 240, 235, 0.25);
+}
+
+body {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
 /* ---- Reset & Base ---- */
 *,
 *::before,
@@ -209,6 +278,62 @@ ol {
 ::selection {
   background-color: rgba(201, 169, 110, 0.3);
   color: var(--color-text-primary);
+}
+
+/* ---- Buttons ----
+   .btn / .btn--primary / .btn--outline are used all over the app but had no
+   styles, so primary buttons (Sign in, Show route, Build my plan...) rendered
+   as bare text. Defined once here. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.btn--primary {
+  background: var(--color-earth);
+  border-color: var(--color-earth);
+  color: var(--color-on-earth);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-earth-light);
+  border-color: var(--color-earth-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+}
+
+.btn--outline:hover:not(:disabled) {
+  border-color: var(--color-earth);
+  color: var(--color-earth);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 /* ---- Typography Utilities ---- */

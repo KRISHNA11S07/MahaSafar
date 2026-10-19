@@ -234,7 +234,7 @@ export default function MaharashtraJourney() {
           </div>
 
           <div className="journey-map__label">
-            <span className="text-label">SCROLLING MAHARASHTRA</span>
+            <span className="text-label">Maharashtra, region by region</span>
           </div>
         </div>
       </div>
