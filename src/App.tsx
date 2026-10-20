@@ -3,10 +3,7 @@ import { lazy, Suspense } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import LoadingScreen from './components/ui/LoadingScreen';
-<<<<<<< HEAD
-=======
 import ChatWidget from './components/chat/ChatWidget';
->>>>>>> 9114024 (Add dark/light theme toggle, Google sign-in, sign up button, button styles, friendlier copy)
 import { useAuthSync } from './lib/useAuthSync';
 
 // Lazy-loaded pages for code splitting
@@ -21,7 +18,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
-function App() {
+function AppInner() {
   useAuthSync();
 
   return (
@@ -46,8 +43,17 @@ function App() {
         </Suspense>
       </main>
       <Footer />
-      <ChatWidget />
+      {/* Chat panel — anchored under navbar, shared state via ChatContext */}
+      <ChatPanel />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ChatProvider>
+      <AppInner />
+    </ChatProvider>
   );
 }
 
