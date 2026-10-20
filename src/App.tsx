@@ -3,7 +3,8 @@ import { lazy, Suspense } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import LoadingScreen from './components/ui/LoadingScreen';
-import ChatWidget from './components/chat/ChatWidget';
+import ChatPanel from './components/chat/ChatPanel';
+import { ChatProvider } from './components/chat/ChatContext';
 import { useAuthSync } from './lib/useAuthSync';
 
 // Lazy-loaded pages for code splitting
