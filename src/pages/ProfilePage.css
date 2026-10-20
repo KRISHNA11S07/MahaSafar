@@ -162,6 +162,39 @@
   padding-top: var(--space-3);
 }
 
+.trip-card__itinerary {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+}
+
+.trip-card__itinerary summary {
+  color: var(--color-earth);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.trip-card__itinerary-day {
+  margin-top: var(--space-3);
+}
+
+.trip-card__itinerary-day h3 {
+  color: var(--color-text-primary);
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-2);
+}
+
+.trip-card__itinerary-event {
+  margin-top: var(--space-2);
+}
+
+.trip-card__itinerary-event p {
+  margin-top: 0.15rem;
+  line-height: var(--leading-normal);
+}
+
 .profile-empty-trips {
   text-align: center;
   background: var(--color-bg-secondary);

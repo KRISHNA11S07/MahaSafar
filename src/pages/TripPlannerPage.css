@@ -115,6 +115,87 @@
   border-color: var(--color-earth);
 }
 
+.planner-field-hint {
+  margin-top: var(--space-2);
+  color: var(--color-text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.departure-time-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(201, 169, 110, 0.12), var(--color-bg-tertiary) 75%);
+}
+
+.departure-time-control__icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  border-radius: var(--radius-md);
+  background: rgba(201, 169, 110, 0.14);
+  color: var(--color-earth);
+}
+
+.departure-time-control__inputs {
+  display: grid;
+  grid-template-columns: minmax(58px, 1fr) auto minmax(58px, 1fr) minmax(72px, 1fr);
+  align-items: end;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.departure-time-control__part {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.departure-time-control__part label {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.departure-time-control__part select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.departure-time-control__part select:focus-visible {
+  outline: 2px solid var(--color-earth);
+  outline-offset: 2px;
+}
+
+.departure-time-control__separator {
+  padding-bottom: 0.65rem;
+  color: var(--color-earth);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.planner-save-error {
+  color: var(--color-terracotta);
+  font-size: var(--text-xs);
+}
+
 .planner-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -385,5 +466,26 @@
   }
   .planner-cost-card {
     position: static;
+  }
+}
+
+@media (max-width: 420px) {
+  .departure-time-control {
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .departure-time-control__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .departure-time-control__inputs {
+    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr) minmax(62px, 1fr);
+    gap: 0.3rem;
+  }
+
+  .departure-time-control__part select {
+    padding-inline: 0.35rem;
   }
 }

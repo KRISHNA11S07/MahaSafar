@@ -62,6 +62,7 @@ export interface Destination {
   idealDays: number;
   distanceFromPune: number;
   distanceFromMumbai: number;
+  railDistancesByOrigin?: Record<string, number>;
   activities: Activity[];
   story: string;
   tagline: string;
@@ -221,6 +222,19 @@ export interface SavedTrip {
   estimatedCost: CostBreakdown;
   itinerary: ItineraryDay[];
   createdAt: string;
+}
+
+export interface SavedPlannerTrip {
+  destination: string;
+  origin: string;
+  days: number;
+  travelers: number;
+  travelMode: TravelMode;
+  stayType: StayType;
+  cost: number;
+  savedAt: string;
+  departureTime?: string;
+  itinerary?: ItineraryDay[];
 }
 
 // ---- User ----

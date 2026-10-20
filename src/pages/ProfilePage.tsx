@@ -5,21 +5,19 @@ import { sampleDestinations } from '../data/destinations';
 import { getDestinationImage } from '../data/images';
 import SafeImage from '../components/ui/SafeImage';
 import { supabase } from '../lib/supabase';
+import type { SavedPlannerTrip } from '../types';
 import './ProfilePage.css';
 
-interface SavedTripItem {
-  destination: string;
-  origin: string;
-  days: number;
-  travelers: number;
-  cost: number;
-  savedAt: string;
-}
+const formatDepartureTime = (time: string) => {
+  const [hour, minute] = time.split(':').map(Number);
+  const period = hour >= 12 ? 'PM' : 'AM';
+  return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${period}`;
+};
 
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [user, setUser] = useState<{ email: string; name: string } | null>(null);
-  const [savedTrips, setSavedTrips] = useState<SavedTripItem[]>([]);
+  const [savedTrips, setSavedTrips] = useState<SavedPlannerTrip[]>([]);
 
   useEffect(() => {
     try {
@@ -93,11 +91,33 @@ export default function ProfilePage() {
                   <span>{trip.days} Days</span>
                   <span>&bull;</span>
                   <span>{trip.travelers} Travelers</span>
+                  {trip.departureTime && (
+                    <>
+                      <span>&bull;</span>
+                      <span>Departs {formatDepartureTime(trip.departureTime)}</span>
+                    </>
+                  )}
                 </div>
                 <div className="trip-card__date">
                   <Calendar size={12} />
                   <span>Saved on {new Date(trip.savedAt).toLocaleDateString()}</span>
                 </div>
+                {trip.itinerary && trip.itinerary.length > 0 && (
+                  <details className="trip-card__itinerary">
+                    <summary>View saved itinerary</summary>
+                    {trip.itinerary.map((day) => (
+                      <section key={day.day} className="trip-card__itinerary-day">
+                        <h3>Day {day.day}: {day.title}</h3>
+                        {day.events.map((event, eventIndex) => (
+                          <div key={`${day.day}-${eventIndex}`} className="trip-card__itinerary-event">
+                            <strong>{event.time} · {event.title}</strong>
+                            <p>{event.description}</p>
+                          </div>
+                        ))}
+                      </section>
+                    ))}
+                  </details>
+                )}
               </div>
             ))}
           </div>
