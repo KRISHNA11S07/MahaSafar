@@ -1,0 +1,36 @@
+/* =========================================
+   User Avatar — Google picture with initials fallback
+   ========================================= */
+
+.user-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--color-border-hover);
+  background: var(--color-earth-soft);
+  color: var(--color-earth);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.user-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-avatar__initials {
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* The ring accent is applied on the trigger button, not the avatar itself,
+   so the avatar can also be reused in plain (non-interactive) contexts. */

@@ -255,6 +255,23 @@
   height: var(--space-6);
 }
 
+/* Mobile drawer sign-out — mirrors the desktop dropdown's terracotta accent */
+.navbar__mobile-link--signout {
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: var(--color-terracotta);
+  cursor: pointer;
+  text-align: left;
+}
+
+.navbar__mobile-link--signout:hover,
+.navbar__mobile-link--signout:focus-visible {
+  color: var(--color-terracotta);
+  opacity: 0.85;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
