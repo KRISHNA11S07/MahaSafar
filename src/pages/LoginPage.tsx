@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LogIn, UserPlus } from 'lucide-react';
 import GoogleIcon from '../components/ui/GoogleIcon';
 import { supabase, getOAuthRedirectUrl } from '../lib/supabase';
+import { useAuth } from '../lib/useAuthSync';
 import './Auth.css';
 
 export default function LoginPage() {
@@ -11,20 +12,21 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [notice, setNotice] = useState('');
   const navigate = useNavigate();
+  const { oauthError, signInLocally } = useAuth();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (email && password) {
-      localStorage.setItem('mahasafar_user', JSON.stringify({ email, name: email.split('@')[0] }));
+      // The email / guest sign-in has no server round-trip; we just record the
+      // visitor locally under the same key Supabase uses so Profile works the
+      // same way for both flows.
+      signInLocally({ email, name: email.split('@')[0] });
       navigate('/profile');
     }
   };
 
   const handleDemoLogin = () => {
-    localStorage.setItem(
-      'mahasafar_user',
-      JSON.stringify({ email: 'explorer@mahasafar.in', name: 'Maharashtra Explorer' })
-    );
+    signInLocally({ email: 'explorer@mahasafar.in', name: 'Maharashtra Explorer' });
     navigate('/profile');
   };
 
@@ -71,6 +73,12 @@ export default function LoginPage() {
         {notice && (
           <p className="auth-notice" role="status">
             {notice}
+          </p>
+        )}
+
+        {oauthError && !notice && (
+          <p className="auth-notice" role="alert">
+            Google sign-in was cancelled, so you stayed signed out. You can try again below.
           </p>
         )}
 

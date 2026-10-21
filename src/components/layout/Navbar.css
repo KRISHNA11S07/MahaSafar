@@ -14,6 +14,28 @@
   transition: background-color 400ms ease, backdrop-filter 400ms ease;
 }
 
+/*
+  The blur lives on a ::before layer rather than on the navbar itself. An
+  element with a backdrop-filter becomes the containing block for its
+  `position: fixed` descendants, which collapsed the mobile drawer
+  (position: fixed; bottom: 0) to zero height. Keeping the filter off the
+  navbar removes that side effect.
+
+  The layer is transparent and carries only the filter; the tint stays on the
+  navbar, so the result is composited exactly as it was before.
+*/
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
 .navbar--transparent {
   background: transparent;
 }
@@ -21,9 +43,12 @@
 .navbar--solid,
 .navbar--scrolled {
   background: var(--color-nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border);
+}
+
+.navbar--solid::before,
+.navbar--scrolled::before {
+  opacity: 1;
 }
 
 .navbar__inner {
@@ -255,6 +280,23 @@
   height: var(--space-6);
 }
 
+/* Mobile drawer sign-out — mirrors the desktop dropdown's terracotta accent */
+.navbar__mobile-link--signout {
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  color: var(--color-terracotta);
+  cursor: pointer;
+  text-align: left;
+}
+
+.navbar__mobile-link--signout:hover,
+.navbar__mobile-link--signout:focus-visible {
+  color: var(--color-terracotta);
+  opacity: 0.85;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
@@ -276,6 +318,16 @@
 
   .navbar__mobile {
     top: var(--navbar-height-mobile);
+    /*
+      Give the drawer an explicit height instead of relying on `bottom: 0`.
+      The drawer is a child of the navbar, so `bottom` would resolve against
+      the navbar whenever the navbar becomes a containing block (a filter,
+      transform or backdrop-filter on it) and collapse the drawer to zero
+      height. `dvh` is always viewport-relative, so this height stays correct
+      either way.
+    */
+    bottom: auto;
+    height: calc(100dvh - var(--navbar-height-mobile));
   }
 }
 

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   MapPin,
@@ -25,6 +25,7 @@ import { REGION_COLORS } from '../data/regions';
 import { CATEGORY_ICONS } from '../data/categories';
 import { DESTINATION_GALLERIES, getDestinationImage } from '../data/images';
 import SafeImage from '../components/ui/SafeImage';
+import { isPlaceSaved, toggleSavedPlace, SAVED_PLACES_EVENT } from '../lib/savedPlaces';
 import type { Destination } from '../types';
 import './DestinationPage.css';
 
@@ -40,6 +41,32 @@ export default function DestinationPage() {
   const destination: Destination | undefined = useMemo(() => {
     return sampleDestinations.find((d) => d.slug === slug);
   }, [slug]);
+
+  // Restore the saved state for this destination on mount
+  useEffect(() => {
+    if (!destination) return;
+    setIsSaved(isPlaceSaved(destination.slug));
+  }, [destination]);
+
+  // Keep in sync when the saved list changes elsewhere in the app
+  useEffect(() => {
+    if (!destination) return;
+    const handleChange = () => setIsSaved(isPlaceSaved(destination.slug));
+    window.addEventListener(SAVED_PLACES_EVENT, handleChange);
+    return () => window.removeEventListener(SAVED_PLACES_EVENT, handleChange);
+  }, [destination]);
+
+  // Toggle this destination in the visitor's Favourite Places
+  const handleToggleSaved = () => {
+    if (!destination) return;
+    const nowSaved = toggleSavedPlace({
+      slug: destination.slug,
+      name: destination.name,
+      districtName: destination.districtName,
+      tagline: destination.tagline,
+    });
+    setIsSaved(nowSaved);
+  };
 
   // Gallery images from centralized registry
   const destinationImages = useMemo(() => {
@@ -208,9 +235,10 @@ export default function DestinationPage() {
             </button>
 
             <button
-              onClick={() => setIsSaved(!isSaved)}
+              onClick={handleToggleSaved}
               className={`dest-hero__icon-btn ${isSaved ? 'dest-hero__icon-btn--active' : ''}`}
               aria-label="Save to favorites"
+              aria-pressed={isSaved}
               title={isSaved ? 'Saved to Favorites' : 'Save to Favorites'}
             >
               <Heart size={18} fill={isSaved ? 'currentColor' : 'none'} />

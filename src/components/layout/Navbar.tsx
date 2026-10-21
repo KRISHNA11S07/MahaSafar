@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, User, MapPin, MessageCircle } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
+import ProfileDropdown from '../ui/ProfileDropdown';
 import { useChatContext } from '../chat/ChatContext';
+import { useAuth } from '../../lib/useAuthSync';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -10,6 +12,7 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const { isOpen: isChatOpen, toggleChat } = useChatContext();
+  const { isAuthenticated, user, storedUser, signOut, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +33,13 @@ export default function Navbar() {
     setIsMobileOpen(false);
     toggleChat();
   }
+
+  async function handleMobileSignOut() {
+    setIsMobileOpen(false);
+    await signOut();
+  }
+
+  const displayName = storedUser?.name || user?.user_metadata?.full_name || 'Explorer';
 
   return (
     <header
@@ -66,10 +76,14 @@ export default function Navbar() {
             <MessageCircle size={14} aria-hidden="true" />
             <span>Chat with AI</span>
           </button>
-          <Link to="/login" className="navbar__link navbar__link--cta">
-            <User size={14} />
-            <span>Login</span>
-          </Link>
+          {/* Logged out: the Login CTA. Logged in: the account dropdown. */}
+          {!isLoading && !isAuthenticated && (
+            <Link to="/login" className="navbar__link navbar__link--cta">
+              <User size={14} />
+              <span>Login</span>
+            </Link>
+          )}
+          {!isLoading && isAuthenticated && <ProfileDropdown />}
           <ThemeToggle />
         </div>
 
@@ -84,6 +98,7 @@ export default function Navbar() {
           >
             <MessageCircle size={18} aria-hidden="true" />
           </button>
+          {!isLoading && isAuthenticated && <ProfileDropdown />}
           <ThemeToggle />
         </div>
 
@@ -112,8 +127,26 @@ export default function Navbar() {
             Chat with AI
           </button>
           <div className="navbar__mobile-divider" />
-          <Link to="/login" className="navbar__mobile-link">Login</Link>
-          <Link to="/register" className="navbar__mobile-link">Sign up</Link>
+          {!isLoading && !isAuthenticated && (
+            <>
+              <Link to="/login" className="navbar__mobile-link">Login</Link>
+              <Link to="/register" className="navbar__mobile-link">Sign up</Link>
+            </>
+          )}
+          {!isLoading && isAuthenticated && (
+            <>
+              <Link to="/profile" className="navbar__mobile-link">
+                {displayName}
+              </Link>
+              <button
+                type="button"
+                className="navbar__mobile-link navbar__mobile-link--signout"
+                onClick={handleMobileSignOut}
+              >
+                Sign Out
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>

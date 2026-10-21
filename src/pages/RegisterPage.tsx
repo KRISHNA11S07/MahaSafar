@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, ArrowRight } from 'lucide-react';
+import { useAuthSync } from '../lib/useAuthSync';
 import './Auth.css';
 
 export default function RegisterPage() {
@@ -8,11 +9,12 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { signInLocally } = useAuthSync();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (email && password) {
-      localStorage.setItem('mahasafar_user', JSON.stringify({ email, name: name || email.split('@')[0] }));
+      signInLocally({ email, name: name || email.split('@')[0] });
       navigate('/profile');
     }
   };

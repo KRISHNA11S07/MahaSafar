@@ -1,0 +1,292 @@
+/* =========================================
+   Profile Dropdown — authenticated user menu
+   ========================================= */
+
+.profile-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+/* The trigger: avatar + chevron. Animate the chevron for feedback. */
+.profile-dropdown__trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+
+.profile-dropdown__trigger--open .profile-dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown__chevron {
+  display: inline-flex;
+  transition: transform var(--transition-smooth);
+  color: var(--color-earth);
+  opacity: 0.75;
+}
+
+.profile-dropdown__trigger:hover .profile-dropdown__chevron {
+  opacity: 1;
+}
+
+.profile-dropdown__trigger:focus-visible {
+  outline: 2px solid var(--color-earth);
+  outline-offset: 3px;
+  border-radius: var(--radius-full);
+}
+
+/* The menu panel is positioned with fixed coordinates measured from the
+   trigger (see ProfileDropdown.tsx), so it always clears the navbar and can
+   never run off the edge of the viewport. */
+.profile-dropdown__menu {
+  position: fixed;
+  width: max-content;
+  min-width: 240px;
+  max-width: min(320px, calc(100vw - var(--space-8)));
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-nav-bg-heavy);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(245, 240, 235, 0.06);
+  z-index: var(--z-overlay);
+  overflow: hidden;
+  animation: dropdown-in var(--transition-smooth) both;
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Signed-in identity card at the top of the menu. */
+.profile-dropdown__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profile-dropdown__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.profile-dropdown__name {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.profile-dropdown__email {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-dropdown__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 2px 0;
+}
+
+.profile-dropdown__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 2px 0;
+}
+
+/* A menu item is an icon + label with a thin gold underline and hover lift,
+   matching the existing `.navbar__link` style used across the navbar. */
+.profile-dropdown__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) 0.6rem;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+              background var(--transition-fast), transform var(--transition-fast);
+}
+
+.profile-dropdown__item::after {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(201, 169, 110, 0.15) 0%, var(--color-earth) 50%, rgba(201, 169, 110, 0.15) 100%);
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+.profile-dropdown__item:hover,
+.profile-dropdown__item:focus-visible {
+  color: var(--color-earth);
+  background: var(--color-earth-soft);
+  transform: translateY(-1px);
+}
+
+.profile-dropdown__item:hover::after,
+.profile-dropdown__item:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.profile-dropdown__item:active {
+  transform: translateY(0.5px) scale(0.97);
+}
+
+.profile-dropdown__item--danger {
+  color: var(--color-terracotta);
+}
+
+.profile-dropdown__item--danger:hover {
+  color: #FFFFFF;
+  background: rgba(196, 90, 60, 0.2);
+}
+
+.profile-dropdown__item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profile-dropdown__item--disabled:hover {
+  color: var(--color-text-primary);
+  background: none;
+  transform: none;
+}
+
+.profile-dropdown__item--disabled:hover::after {
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+/* Badge shown on items that are not built yet */
+.profile-dropdown__badge {
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-earth);
+  background: var(--color-earth-soft);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+}
+
+/* Sign out is styled as its own outlined pill so it reads as a distinct
+   terminal action rather than another navigation link. */
+.profile-dropdown__signout {
+  width: auto;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(196, 90, 60, 0.3);
+  color: var(--color-terracotta);
+  margin: var(--space-1) 0;
+}
+
+.profile-dropdown__signout::after {
+  display: none;
+}
+
+.profile-dropdown__signout:hover {
+  background: rgba(196, 90, 60, 0.2);
+  border-color: var(--color-terracotta);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.profile-dropdown__signout:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.profile-dropdown__signout:disabled:hover {
+  background: none;
+  border-color: rgba(196, 90, 60, 0.3);
+  transform: none;
+}
+
+.profile-dropdown__error {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-terracotta);
+  background: rgba(196, 90, 60, 0.12);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(196, 90, 60, 0.25);
+}
+
+.profile-dropdown__spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Responsive: the dropdown also works from the mobile action bar ---- */
+@media (max-width: 768px) {
+  .profile-dropdown__menu {
+    min-width: min(260px, calc(100vw - var(--space-8)));
+    max-width: calc(100vw - var(--space-8));
+  }
+
+  .profile-dropdown__chevron {
+    display: none;
+  }
+
+  .profile-dropdown__email {
+    max-width: 160px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-dropdown__menu,
+  .profile-dropdown__chevron,
+  .profile-dropdown__item,
+  .profile-dropdown__item::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

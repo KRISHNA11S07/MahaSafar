@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MahaSafar</title>
+    <script>
+      // GitHub Pages serves this file for any path it does not have on disk.
+      // A deep link such as /MahaSafar/profile would otherwise 404 on a
+      // refresh, so we hand the original URL to the app and let it route
+      // from the root.
+      (function () {
+        try {
+          var target = window.location.pathname + window.location.search + window.location.hash;
+          var base = '/MahaSafar/';
+          if (target.indexOf(base) !== 0) {
+            target = base;
+          }
+          sessionStorage.setItem('mahasafar:redirect', target);
+        } catch (e) {
+          // Private mode: fall through to the root.
+        }
+        window.location.replace('/MahaSafar/');
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Taking you to MahaSafar…</p>
+  </body>
+</html>
