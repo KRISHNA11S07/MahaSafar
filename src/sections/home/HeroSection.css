@@ -104,8 +104,9 @@
 /* SVG Map Overlay */
 .hero__map {
   width: 220px;
-  height: 170px;
+  height: auto;
   margin-bottom: -40px;
+  transform: translateY(-4px);
   pointer-events: none;
   filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.3));
 }

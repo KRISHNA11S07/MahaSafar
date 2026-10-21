@@ -5,8 +5,39 @@ import { gsap, ScrollTrigger, useGSAP } from '../../animations/gsapConfig';
 import { regions } from '../../data/regions';
 import { sampleDestinations } from '../../data/destinations';
 import { REGIONAL_CHAPTER_IMAGES, getDestinationImage } from '../../data/images';
+import {
+  MAHARASHTRA_BOUNDARY_ATTRIBUTION,
+  MAHARASHTRA_BOUNDARY_PATH,
+  MAHARASHTRA_MAP_VIEWBOX,
+  projectMaharashtraCoordinates,
+} from '../../data/maharashtraBoundary';
 import SafeImage from '../../components/ui/SafeImage';
 import './MaharashtraJourney.css';
+
+interface JourneyMapCity {
+  name: string;
+  coordinates: [number, number];
+  color: string;
+  radius: number;
+  labelOffset: [number, number];
+  emphasis?: boolean;
+}
+
+const JOURNEY_MAP_CITIES: JourneyMapCity[] = [
+  { name: 'Mumbai', coordinates: [72.8777, 19.076], color: '#C9A96E', radius: 5, labelOffset: [-18, 19], emphasis: true },
+  { name: 'Pune', coordinates: [73.8567, 18.5204], color: '#4A6741', radius: 4.5, labelOffset: [8, -9] },
+  { name: 'Nashik', coordinates: [73.7898, 19.9975], color: '#8B6F47', radius: 4, labelOffset: [7, -7] },
+  { name: 'Sambhajinagar', coordinates: [75.3433, 19.8762], color: '#A67B5B', radius: 4.5, labelOffset: [8, -2] },
+  { name: 'Nagpur', coordinates: [79.0882, 21.1458], color: '#6B8E4E', radius: 5, labelOffset: [8, 4], emphasis: true },
+  { name: 'Kolhapur', coordinates: [74.2433, 16.705], color: '#4A6741', radius: 4, labelOffset: [8, 4] },
+  { name: 'Sindhudurg', coordinates: [73.4682, 16.0194], color: '#2A5F9E', radius: 4.5, labelOffset: [-5, 18] },
+];
+
+const JOURNEY_MAP_POINTS = JOURNEY_MAP_CITIES.map((city) => ({
+  ...city,
+  point: projectMaharashtraCoordinates(city.coordinates),
+}));
+const JOURNEY_MAP_ROUTE = `M ${JOURNEY_MAP_POINTS.map(({ point }) => point.join(' ')).join(' L ')} Z`;
 
 const CHAPTER_COLORS: Record<number, string> = {
   1: '#2A5F9E', // Konkan blue
@@ -140,7 +171,7 @@ export default function MaharashtraJourney() {
   return (
     <section className="journey" ref={sectionRef} id="journey" aria-label="Maharashtra Journey">
       {/* Sticky Visual Viewport: Pinned Real Destination Photography + SVG Map */}
-      <div className="journey-map" ref={mapRef} aria-hidden="true">
+      <div className="journey-map" ref={mapRef}>
         <div className="journey-map__inner">
           {/* Active Chapter Real Photograph Showcase */}
           <div className="journey-photo-backdrop">
@@ -161,23 +192,24 @@ export default function MaharashtraJourney() {
           <div className="journey-map__svg-wrapper">
             <svg
               className="journey-map__svg"
-              viewBox="0 0 400 350"
+              viewBox={MAHARASHTRA_MAP_VIEWBOX}
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
-              {/* Maharashtra outline */}
               <path
                 className="journey-map__outline"
-                d="M120 40 L140 32 L160 28 L180 30 L200 25 L220 28 L240 22 L260 30 L280 28 L300 35 L315 48 L325 65 L332 85 L338 105 L340 125 L338 145 L330 162 L318 178 L305 192 L290 205 L275 218 L260 228 L245 238 L228 248 L210 258 L192 265 L175 268 L158 265 L142 258 L128 248 L115 235 L102 220 L90 205 L80 188 L72 170 L65 152 L60 135 L58 118 L60 100 L65 85 L72 70 L82 55 L95 45 Z"
+                d={MAHARASHTRA_BOUNDARY_PATH}
                 stroke="rgba(245, 240, 235, 0.25)"
                 strokeWidth="1.2"
                 fill="rgba(10, 9, 8, 0.45)"
+                fillRule="evenodd"
               />
 
-              {/* Route line through Maharashtra forming complete circle through all cities */}
+              {/* Illustrative route connects the mapped cities in geographic order. */}
               <path
                 className="journey-map__route"
-                d="M130 175 L155 160 L175 148 L195 135 L200 110 L215 95 L245 85 L270 95 L295 115 L310 140 L285 175 L245 200 L195 215 L140 220 L115 250 L112 215 L130 175 Z"
+                d={JOURNEY_MAP_ROUTE}
                 stroke="var(--color-earth)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
@@ -188,53 +220,35 @@ export default function MaharashtraJourney() {
                 opacity="0.9"
               />
 
-              {/* District markers */}
-              {/* Mumbai */}
-              <circle cx="130" cy="175" r="5" fill="#C9A96E" className="journey-map__marker" />
-              <text x="110" y="193" fill="#F5F0EB" fontSize="9" fontWeight="600" fontFamily="var(--font-ui)">
-                Mumbai
-              </text>
-
-              {/* Pune */}
-              <circle cx="155" cy="160" r="4.5" fill="#4A6741" className="journey-map__marker" />
-              <text x="140" y="153" fill="rgba(245,240,235,0.8)" fontSize="8" fontFamily="var(--font-ui)">
-                Pune
-              </text>
-
-              {/* Nashik */}
-              <circle cx="175" cy="148" r="4" fill="#8B6F47" className="journey-map__marker" />
-              <text x="178" y="142" fill="rgba(245,240,235,0.8)" fontSize="8" fontFamily="var(--font-ui)">
-                Nashik
-              </text>
-
-              {/* Kolhapur */}
-              <circle cx="140" cy="220" r="4" fill="#4A6741" className="journey-map__marker" />
-              <text x="146" y="224" fill="rgba(245,240,235,0.8)" fontSize="8" fontFamily="var(--font-ui)">
-                Kolhapur
-              </text>
-
-              {/* Sambhajinagar */}
-              <circle cx="215" cy="95" r="4.5" fill="#A67B5B" className="journey-map__marker" />
-              <text x="220" y="90" fill="rgba(245,240,235,0.8)" fontSize="8" fontFamily="var(--font-ui)">
-                Sambhajinagar
-              </text>
-
-              {/* Nagpur */}
-              <circle cx="310" cy="140" r="5" fill="#6B8E4E" className="journey-map__marker" />
-              <text x="295" y="157" fill="#F5F0EB" fontSize="9" fontWeight="600" fontFamily="var(--font-ui)">
-                Nagpur
-              </text>
-
-              {/* Sindhudurg/Konkan */}
-              <circle cx="115" cy="250" r="4.5" fill="#2A5F9E" className="journey-map__marker" />
-              <text x="100" y="265" fill="#F5F0EB" fontSize="8" fontFamily="var(--font-ui)">
-                Sindhudurg
-              </text>
+              {JOURNEY_MAP_POINTS.map(({ name, point, color, radius, labelOffset, emphasis }) => (
+                <g key={name}>
+                  <circle
+                    cx={point[0]}
+                    cy={point[1]}
+                    r={radius}
+                    fill={color}
+                    className="journey-map__marker"
+                  />
+                  <text
+                    x={point[0] + labelOffset[0]}
+                    y={point[1] + labelOffset[1]}
+                    fill={emphasis ? '#F5F0EB' : 'rgba(245,240,235,0.85)'}
+                    fontSize={emphasis ? 9 : 8}
+                    fontWeight={emphasis ? 600 : 400}
+                    fontFamily="var(--font-ui)"
+                  >
+                    {name}
+                  </text>
+                </g>
+              ))}
             </svg>
           </div>
 
           <div className="journey-map__label">
             <span className="text-label">Maharashtra, region by region</span>
+            <a href={MAHARASHTRA_BOUNDARY_ATTRIBUTION.website} target="_blank" rel="noreferrer">
+              Boundary data: geoBoundaries
+            </a>
           </div>
         </div>
       </div>

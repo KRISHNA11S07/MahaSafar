@@ -109,6 +109,18 @@
   font-size: 0.7rem;
   letter-spacing: var(--tracking-widest);
   color: var(--color-earth);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.journey-map__label a {
+  width: fit-content;
+  color: rgba(245, 240, 235, 0.8);
+  font-size: 0.65rem;
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* Scrolling Chapters */

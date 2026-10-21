@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { ChevronDown, Camera } from 'lucide-react';
 import { gsap, useGSAP } from '../../animations/gsapConfig';
 import { HERO_IMAGE } from '../../data/images';
+import { MAHARASHTRA_BOUNDARY_PATH, MAHARASHTRA_MAP_VIEWBOX } from '../../data/maharashtraBoundary';
 import SafeImage from '../../components/ui/SafeImage';
 import './HeroSection.css';
 
@@ -35,19 +36,27 @@ export default function HeroSection() {
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.6 },
       0.2
-    )
-      .fromTo(
-        mapRef.current?.querySelector('.hero__map-path') as Element,
-        { strokeDashoffset: 800 },
+    );
+
+    const mapPath = mapRef.current?.querySelector<SVGPathElement>('.hero__map-path');
+    if (mapPath) {
+      const pathLength = Math.ceil(mapPath.getTotalLength());
+      mapPath.style.strokeDasharray = `${pathLength}`;
+      mapPath.style.strokeDashoffset = `${pathLength}`;
+      tl.fromTo(
+        mapPath,
+        { strokeDashoffset: pathLength },
         { strokeDashoffset: 0, duration: 1.4, ease: 'power1.inOut' },
         '-=0.2'
-      )
-      .fromTo(
-        titleRef.current,
-        { opacity: 0, scale: 0.88, y: 25 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: 'expo.out' },
-        '-=0.6'
-      )
+      );
+    }
+
+    tl.fromTo(
+      titleRef.current,
+      { opacity: 0, scale: 0.88, y: 25 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: 'expo.out' },
+      '-=0.6'
+    )
       .fromTo(
         taglineRef.current,
         { opacity: 0, y: 15 },
@@ -104,29 +113,20 @@ export default function HeroSection() {
         <svg
           ref={mapRef}
           className="hero__map"
-          viewBox="0 0 400 320"
+          viewBox={MAHARASHTRA_MAP_VIEWBOX}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          {/* Simplified Maharashtra outline */}
           <path
             className="hero__map-path"
-            d="M120 40 L140 32 L160 28 L180 30 L200 25 L220 28 L240 22 L260 30 L280 28 L300 35 L315 48 L325 65 L332 85 L338 105 L340 125 L338 145 L330 162 L318 178 L305 192 L290 205 L275 218 L260 228 L245 238 L228 248 L210 258 L192 265 L175 268 L158 265 L142 258 L128 248 L115 235 L102 220 L90 205 L80 188 L72 170 L65 152 L60 135 L58 118 L60 100 L65 85 L72 70 L82 55 L95 45 Z"
+            d={MAHARASHTRA_BOUNDARY_PATH}
             stroke="var(--color-earth)"
             strokeWidth="1.2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeDasharray="800"
-            strokeDashoffset="800"
             opacity="0.45"
           />
-          {/* Subtle inner nodes */}
-          <circle cx="148" cy="155" r="2.5" fill="var(--color-earth)" opacity="0.6" />
-          <circle cx="200" cy="80" r="2.5" fill="var(--color-earth)" opacity="0.6" />
-          <circle cx="290" cy="140" r="2.5" fill="var(--color-earth)" opacity="0.6" />
-          <circle cx="230" cy="200" r="2.5" fill="var(--color-earth)" opacity="0.6" />
-          <circle cx="170" cy="120" r="2.5" fill="var(--color-earth)" opacity="0.6" />
         </svg>
 
         {/* Title */}
