@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
   useCallback,
+  useRef,
   type ReactNode,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -144,7 +145,7 @@ function clearPersistedUser() {
  *   1. Restores the session on startup (from Supabase storage or via getSession).
  *   2. Mirrors it into localStorage.
  *   3. Updates React state on every auth event.
- *   4. Jumps to /profile on a successful OAuth return trip.
+ *   4. Jumps to the home page on a successful OAuth return trip.
  *   5. Flags (but does not navigate on) an OAuth error such as a cancelled
  *      consent, so the Login page can surface it.
  */
@@ -154,6 +155,9 @@ function useAuthState() {
   const [storedUser, setStoredUser] = useState<StoredUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [oauthError, setOauthError] = useState(false);
+  // Guards the OAuth return handling so it can only ever run once per page
+  // load, however many times the effect below is re-created.
+  const oauthHandledRef = useRef(false);
 
   // ---- Session restore on first paint ----
   useEffect(() => {
@@ -227,6 +231,14 @@ function useAuthState() {
   useEffect(() => {
     if (!supabase) return;
 
+    // `useNavigate` changes identity whenever the current route changes, so
+    // this effect runs again on every navigation. The OAuth flags are module
+    // level constants that stay true for the whole life of the page, so
+    // without this guard the redirect below would fire on every route change
+    // and drag the visitor back (away from wherever they navigated to).
+    if (oauthHandledRef.current) return;
+    oauthHandledRef.current = true;
+
     if (isOAuthError) {
       // The visitor cancelled consent (or the provider errored). Nothing was
       // signed in. The provider sends them back to the site root, so we send
@@ -240,12 +252,13 @@ function useAuthState() {
 
     if (!isOAuthCallback) return;
 
-    // On the OAuth success trip, redirect to /profile immediately.
-    navigate('/profile', { replace: true });
+    // On the OAuth success trip, land the visitor on the home page. The
+    // profile is still one click away in the account menu.
+    navigate('/', { replace: true });
     clearOAuthParamsFromUrl();
     // No need to subscribe: the restore above already wired SIGNED_IN to
     // persistUser, and Supabase will also fire it again if the visitor
-    // refreshes /profile (its own INITIAL_SESSION branch keeps the user set).
+    // refreshes the page (its own INITIAL_SESSION branch keeps the user set).
   }, [navigate]);
 
   const signOut = useCallback(async () => {
