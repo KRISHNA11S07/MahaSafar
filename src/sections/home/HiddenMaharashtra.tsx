@@ -96,7 +96,15 @@ export default function HiddenMaharashtra() {
 
                   <div className="hidden-card__photo-credit">
                     <Camera size={10} />
-                    <span>{spotImage.location}</span>
+                    {spot.slug === 'purushwadi-fireflies' && spotImage.sourcePage && spotImage.licenseUrl ? (
+                      <span>
+                        Photo: <a href={spotImage.sourcePage} target="_blank" rel="noreferrer">{spotImage.photographer}</a>
+                        {' · '}
+                        <a href={spotImage.licenseUrl} target="_blank" rel="noreferrer">{spotImage.license}</a>
+                      </span>
+                    ) : (
+                      <span>{spotImage.location}</span>
+                    )}
                   </div>
                 </div>
 

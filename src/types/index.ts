@@ -106,6 +106,12 @@ export interface TopPlace {
   description: string;
   image: string;
   categories: string[];
+  imageCredit?: {
+    photographer: string;
+    sourcePage: string;
+    license: string;
+    licenseUrl: string;
+  };
 }
 
 export interface StayOption {

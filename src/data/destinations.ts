@@ -145,7 +145,18 @@ export const sampleDestinations: Destination[] = [
     topPlaces: [
       { name: 'Mahalakshmi Temple', description: 'One of the Shakti Peethas, the most revered temple in Kolhapur', image: DESTINATION_GALLERIES['kolhapur'].gallery[0]?.url || DESTINATION_GALLERIES['kolhapur'].heroImage.url, categories: ['spiritual', 'heritage'] },
       { name: 'Rankala Lake', description: 'Picturesque lake with a temple in the center', image: DESTINATION_GALLERIES['kolhapur'].gallery[1]?.url || DESTINATION_GALLERIES['kolhapur'].heroImage.url, categories: ['nature', 'leisure'] },
-      { name: 'New Palace', description: 'Indo-Saracenic palace housing a remarkable museum', image: DESTINATION_GALLERIES['kolhapur'].gallery[2]?.url || DESTINATION_GALLERIES['kolhapur'].heroImage.url, categories: ['heritage', 'museum'] },
+      {
+        name: 'New Palace',
+        description: 'Indo-Saracenic palace housing a remarkable museum',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Kolhapur_New_Palace.jpg/1280px-Kolhapur_New_Palace.jpg',
+        imageCredit: {
+          photographer: 'Vijayshankar.munoli',
+          sourcePage: 'https://commons.wikimedia.org/wiki/File:Kolhapur_New_Palace.jpg',
+          license: 'CC BY-SA 3.0',
+          licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+        },
+        categories: ['heritage', 'museum'],
+      },
     ],
     foodAndCulture: { description: 'Kolhapuri food is legendary. The fiery red mutton rassa, the tangy tambda-pandhra rassa combo, and the iconic Kolhapuri misal are reasons enough to visit. Kolhapuri chappals and jewellery are world-famous crafts.', specialities: ['Kolhapuri Misal', 'Tambda-Pandhra Rassa', 'Kolhapuri Mutton', 'Bhel at Rankala'] },
     howToReach: { road: 'NH48 from Pune (230km, ~4hrs) or Mumbai (395km, ~7hrs)', rail: 'Kolhapur (Chhatrapati Shahu Maharaj Terminus) — well connected to Pune, Mumbai', air: 'Kolhapur Airport (limited connectivity) or Pune Airport (230km)' },

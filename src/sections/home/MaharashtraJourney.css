@@ -220,6 +220,16 @@
   color: var(--color-earth);
 }
 
+.photo-strip-item__credit {
+  font-size: 0.55rem;
+  line-height: 1.1;
+  color: rgba(245, 240, 235, 0.8);
+}
+
+.photo-strip-item__credit a {
+  color: inherit;
+}
+
 /* Upgraded Destination Cards with Real Photography */
 .journey-chapter__destinations {
   display: flex;

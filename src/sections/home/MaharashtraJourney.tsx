@@ -293,6 +293,13 @@ export default function MaharashtraJourney() {
                     <div className="photo-strip-item__caption">
                       <span className="photo-strip-item__name">{spot.name}</span>
                       <span className="photo-strip-item__dist">{spot.district}</span>
+                      {spot.image.sourcePage && spot.image.licenseUrl && (
+                        <span className="photo-strip-item__credit">
+                          Photo: <a href={spot.image.sourcePage} target="_blank" rel="noreferrer">{spot.image.photographer}</a>
+                          {' · '}
+                          <a href={spot.image.licenseUrl} target="_blank" rel="noreferrer">{spot.image.license}</a>
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}

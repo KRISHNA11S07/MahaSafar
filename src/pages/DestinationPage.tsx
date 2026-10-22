@@ -400,6 +400,18 @@ export default function DestinationPage() {
                       <span className="dest-gallery-item__credit">
                         <Camera size={11} />
                         <span>{img.location}</span>
+                        {img.licenseUrl && img.sourcePage && (
+                          <>
+                            <span aria-hidden="true">·</span>
+                            <a href={img.sourcePage} target="_blank" rel="noreferrer">
+                              {img.photographer}
+                            </a>
+                            <span aria-hidden="true">·</span>
+                            <a href={img.licenseUrl} target="_blank" rel="noreferrer">
+                              {img.license}
+                            </a>
+                          </>
+                        )}
                       </span>
                     </div>
                   </div>
@@ -425,7 +437,9 @@ export default function DestinationPage() {
             {destination.topPlaces.map((place, idx) => {
               // Connect place to matching gallery image or fallback to primary destination card photo
               const placePhotoUrl =
-                galleryList[idx % galleryList.length]?.url || heroImage.url;
+                destination.slug === 'kolhapur'
+                  ? place.image
+                  : galleryList[idx % galleryList.length]?.url || heroImage.url;
 
               return (
                 <div key={idx} className="place-card">
@@ -444,6 +458,13 @@ export default function DestinationPage() {
                   <div className="place-card__content">
                     <h3 className="place-card__title">{place.name}</h3>
                     <p className="place-card__desc">{place.description}</p>
+                    {place.imageCredit && (
+                      <small className="place-card__image-credit">
+                        Photo: <a href={place.imageCredit.sourcePage} target="_blank" rel="noreferrer">{place.imageCredit.photographer}</a>
+                        {' · '}
+                        <a href={place.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{place.imageCredit.license}</a>
+                      </small>
+                    )}
                   </div>
                 </div>
               );
