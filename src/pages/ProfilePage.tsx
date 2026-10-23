@@ -23,6 +23,9 @@ import UserAvatar from '../components/ui/UserAvatar';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../lib/useAuthSync';
 import { getSavedPlaces, removeSavedPlace, SAVED_PLACES_EVENT, type SavedPlace } from '../lib/savedPlaces';
+import { buildShareUrl, getTripOrigin, type ShareableTripInput } from '../lib/tripShare';
+import TripPrintView from '../components/trip/TripPrintView';
+import TripShareActions from '../components/trip/TripShareActions';
 import type { SavedPlannerTrip } from '../types';
 import './ProfilePage.css';
 
@@ -31,6 +34,24 @@ const formatDepartureTime = (time: string) => {
   const period = hour >= 12 ? 'PM' : 'AM';
   return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${period}`;
 };
+
+function getSavedTripShareInput(trip: SavedPlannerTrip): ShareableTripInput | null {
+  const destination = sampleDestinations.find((item) => item.slug === trip.destinationSlug)
+    ?? sampleDestinations.find((item) => item.name === trip.destination);
+  const origin = getTripOrigin(trip.origin);
+  if (!destination || !origin) return null;
+  return {
+    destination: destination.slug,
+    origin,
+    departureTime: trip.departureTime ?? '07:00',
+    people: Math.min(10, Math.max(1, trip.travelers)),
+    days: Math.min(7, Math.max(1, trip.days)),
+    travelMode: trip.travelMode,
+    stayType: trip.stayType,
+    travelStyle: trip.travelStyle ?? 'balanced',
+    foodPreference: trip.foodPref ?? 'both',
+  };
+}
 
 /** Google exposes these in user_metadata; phone is only present when the
  *  Google account has a phone number shared with the app. */
@@ -73,6 +94,7 @@ export default function ProfilePage() {
 
   const [savedTrips, setSavedTrips] = useState<SavedPlannerTrip[]>([]);
   const [savedPlaces, setSavedPlaces] = useState<SavedPlace[]>([]);
+  const [printingTripIndex, setPrintingTripIndex] = useState<number | null>(null);
 
   // Edit form state
   const [isEditing, setIsEditing] = useState(searchParams.get('edit') === '1');
@@ -219,6 +241,14 @@ export default function ProfilePage() {
     removeSavedPlace(slug);
     setSavedPlaces(getSavedPlaces());
   };
+
+  const printSavedTrip = (index: number) => {
+    setPrintingTripIndex(index);
+    requestAnimationFrame(() => window.print());
+  };
+
+  const printingTrip = printingTripIndex === null ? null : savedTrips[printingTripIndex];
+  const printingInput = printingTrip ? getSavedTripShareInput(printingTrip) : null;
 
   if (isLoading) {
     return (
@@ -448,6 +478,10 @@ export default function ProfilePage() {
                   <Calendar size={12} />
                   <span>Saved on {new Date(trip.savedAt).toLocaleDateString()}</span>
                 </div>
+                {(() => {
+                  const input = getSavedTripShareInput(trip);
+                  return input ? <TripShareActions input={input} destinationName={trip.destination} total={trip.cost} onPrint={() => printSavedTrip(idx)} /> : null;
+                })()}
                 {trip.itinerary && trip.itinerary.length > 0 && (
                   <details className="trip-card__itinerary">
                     <summary>View saved itinerary</summary>
@@ -515,6 +549,20 @@ export default function ProfilePage() {
           })}
         </div>
       </section>
+      {printingTrip && printingInput && (
+        <TripPrintView
+          destination={printingTrip.destination}
+          origin={printingTrip.origin}
+          departureTime={printingTrip.departureTime ?? '07:00'}
+          travelers={printingTrip.travelers}
+          days={printingTrip.days}
+          travelMode={printingTrip.travelMode}
+          stayType={printingTrip.stayType}
+          costs={{ total: printingTrip.cost, ...printingTrip.costBreakdown }}
+          itinerary={printingTrip.itinerary ?? []}
+          shareUrl={buildShareUrl(printingInput)}
+        />
+      )}
     </div>
   );
 }

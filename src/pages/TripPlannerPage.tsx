@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import {
   Users,
   Calendar,
@@ -10,13 +10,15 @@ import {
   Bike,
   Check,
   Bookmark,
-  Printer,
   Backpack,
   ChevronRight,
   ShieldCheck,
   Info,
 } from 'lucide-react';
 import { sampleDestinations } from '../data/destinations';
+import { decodeTrip, buildShareUrl, type ShareableTripInput } from '../lib/tripShare';
+import TripPrintView from '../components/trip/TripPrintView';
+import TripShareActions from '../components/trip/TripShareActions';
 import type {
   ItineraryDay,
   TravelMode,
@@ -96,6 +98,8 @@ const ROAD_DETOUR_FACTOR = calculateRoadDetourFactor();
 
 export default function TripPlannerPage() {
   const { destinationSlug } = useParams<{ destinationSlug?: string }>();
+  const [searchParams] = useSearchParams();
+  const sharedTrip = useMemo(() => decodeTrip(searchParams.get('trip')), [searchParams]);
 
   // State
   const [selectedDestSlug, setSelectedDestSlug] = useState<string>(
@@ -117,6 +121,19 @@ export default function TripPlannerPage() {
   const [foodPref, setFoodPref] = useState<FoodPreference>('both');
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
+
+  useEffect(() => {
+    if (!sharedTrip) return;
+    setSelectedDestSlug(sharedTrip.destination);
+    setOriginCity(sharedTrip.origin.name);
+    setDepartureTime(sharedTrip.departureTime);
+    setTravelers(sharedTrip.people);
+    setDays(sharedTrip.days);
+    setTravelMode(sharedTrip.travelMode);
+    setStayType(sharedTrip.stayType);
+    setTravelStyle(sharedTrip.travelStyle);
+    setFoodPref(sharedTrip.foodPreference);
+  }, [sharedTrip]);
 
   // Active destination
   const activeDest = useMemo(() => {
@@ -403,14 +420,24 @@ export default function TripPlannerPage() {
   const handleSaveTrip = () => {
     const tripData = {
       destination: activeDest.name,
+      destinationSlug: activeDest.slug,
       origin: originCity,
       days,
       travelers,
       travelMode,
       stayType,
+      travelStyle,
+      foodPref,
       departureTime,
       itinerary: generatedItinerary,
       cost: costBreakdown.total,
+      costBreakdown: {
+        travel: costBreakdown.travel,
+        stay: costBreakdown.stay,
+        food: costBreakdown.food,
+        activities: costBreakdown.activities,
+        misc: costBreakdown.misc,
+      },
       savedAt: new Date().toISOString(),
     };
     try {
@@ -433,6 +460,22 @@ export default function TripPlannerPage() {
   const handlePrint = () => {
     window.print();
   };
+
+  const shareInput: ShareableTripInput = {
+    destination: activeDest.slug,
+    origin: {
+      name: originCity,
+      coordinates: ORIGIN_CITIES.find((city) => city.name === originCity)?.coordinates ?? ORIGIN_CITIES[0].coordinates,
+    },
+    departureTime,
+    people: travelers,
+    days,
+    travelMode,
+    stayType,
+    travelStyle,
+    foodPreference: foodPref,
+  };
+  const shareUrl = buildShareUrl(shareInput);
 
   const isRoughBudget = budgetTravelEstimate.source === 'rough-road' ||
     budgetTravelEstimate.source === 'rough-train';
@@ -457,6 +500,7 @@ export default function TripPlannerPage() {
             <p className="planner-subtitle">
               Tell us where you're headed and how you like to travel. You'll get honest cost estimates and a day-by-day plan to start from.
             </p>
+            {sharedTrip && <p className="planner-shared-banner" role="status">Shared trip loaded — customize this trip to make it your own.</p>}
           </div>
         </div>
       </header>
@@ -792,10 +836,7 @@ export default function TripPlannerPage() {
               </button>
               {saveError && <p className="planner-save-error" role="alert">{saveError}</p>}
 
-              <button onClick={handlePrint} className="btn btn--outline cost-btn">
-                <Printer size={16} />
-                <span>Print / PDF</span>
-              </button>
+              <TripShareActions input={shareInput} destinationName={activeDest.name} total={costBreakdown.total} onPrint={handlePrint} />
             </div>
 
             <div className="cost-dest-link">
@@ -849,6 +890,18 @@ export default function TripPlannerPage() {
             </span>
           </div>
         </section>
+        <TripPrintView
+          destination={activeDest.name}
+          origin={originCity}
+          departureTime={departureTime}
+          travelers={travelers}
+          days={days}
+          travelMode={travelMode}
+          stayType={stayType}
+          costs={costBreakdown}
+          itinerary={generatedItinerary}
+          shareUrl={shareUrl}
+        />
       </div>
     </div>
   );

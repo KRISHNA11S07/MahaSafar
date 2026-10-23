@@ -1,0 +1,23 @@
+.trip-print-view { display: none; }
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .navbar, footer:not(.trip-print-view footer), .chat-panel, .chat-widget, button, .planner-page > :not(.trip-print-view), .profile-page > :not(.trip-print-view) { display: none !important; }
+  .trip-print-view { color: #000; display: block !important; font: 11pt/1.45 Arial, sans-serif; margin: 0 auto; max-width: 190mm; }
+  .trip-print-view header { border-bottom: 2px solid #000; margin-bottom: 12pt; padding-bottom: 8pt; }
+  .trip-print-view header span { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .trip-print-view h1 { color: #000; font-size: 24pt; margin: 5pt 0; }
+  .trip-print-view h2 { color: #000; font-size: 15pt; margin: 16pt 0 6pt; }
+  .trip-print-view h3 { color: #000; font-size: 12pt; margin: 0 0 6pt; }
+  .trip-print-view__details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; }
+  .trip-print-view dt { color: #555; font-size: 9pt; text-transform: uppercase; }
+  .trip-print-view dd { margin: 0; text-transform: capitalize; }
+  .trip-print-view table { border-collapse: collapse; width: 100%; }
+  .trip-print-view th, .trip-print-view td { border-bottom: 1px solid #bbb; padding: 5pt; text-align: left; }
+  .trip-print-view td { text-align: right; }
+  .trip-print-view__day { border: 1px solid #bbb; break-inside: avoid; margin-top: 8pt; padding: 8pt; page-break-inside: avoid; }
+  .trip-print-view__day div { margin-top: 6pt; }
+  .trip-print-view__day time { display: inline-block; font-weight: 700; min-width: 78pt; }
+  .trip-print-view__day p { margin: 2pt 0 0 78pt; }
+  .trip-print-view footer { border-top: 1px solid #000; font-size: 9pt; margin-top: 15pt; padding-top: 6pt; word-break: break-word; }
+  @page { margin: 12mm; size: A4; }
+}

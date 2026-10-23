@@ -189,6 +189,7 @@ export interface TripInput {
   stayType: StayType;
   travelStyle: TravelStyle;
   foodPreference: FoodPreference;
+  departureTime?: string;
 }
 
 export interface CostBreakdown {
@@ -232,15 +233,25 @@ export interface SavedTrip {
 
 export interface SavedPlannerTrip {
   destination: string;
+  destinationSlug?: string;
   origin: string;
   days: number;
   travelers: number;
   travelMode: TravelMode;
   stayType: StayType;
+  travelStyle?: TravelStyle;
+  foodPref?: FoodPreference;
   cost: number;
   savedAt: string;
   departureTime?: string;
   itinerary?: ItineraryDay[];
+  costBreakdown?: {
+    travel: number;
+    stay: number;
+    food: number;
+    activities: number;
+    misc: number;
+  };
 }
 
 // ---- User ----
