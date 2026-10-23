@@ -25,6 +25,7 @@ import { REGION_COLORS } from '../data/regions';
 import { CATEGORY_ICONS } from '../data/categories';
 import { DESTINATION_GALLERIES, getDestinationImage } from '../data/images';
 import SafeImage from '../components/ui/SafeImage';
+import WeatherCard from '../components/ui/WeatherCard';
 import { isPlaceSaved, toggleSavedPlace, SAVED_PLACES_EVENT } from '../lib/savedPlaces';
 import type { Destination } from '../types';
 import './DestinationPage.css';
@@ -309,6 +310,10 @@ export default function DestinationPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="dest-weather container" aria-label="Weather and travel conditions">
+        <WeatherCard key={destination.slug} destination={destination} />
       </section>
 
       {/* 3. The Story & Essence */}

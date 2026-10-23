@@ -262,6 +262,10 @@
   font-weight: 600;
 }
 
+.dest-weather {
+  padding-top: var(--space-10);
+}
+
 /* 3. Sections general */
 .dest-section {
   padding: var(--space-16) 0;
