@@ -24,6 +24,7 @@ export default function Footer() {
             <h4 className="footer__column-title">Plan</h4>
             <Link to="/plan" className="footer__link">Trip Planner</Link>
             <Link to="/plan" className="footer__link">Cost Guide</Link>
+            <Link to="/safety" className="footer__link">Safety</Link>
             <Link to="/" className="footer__link">How It Works</Link>
           </div>
           <div className="footer__column">

@@ -365,6 +365,39 @@
   padding-top: var(--space-2);
 }
 
+.district-hidden-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  color: var(--color-text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.district-hidden-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-transform: capitalize;
+}
+
+.district-hidden-card__safety-note {
+  display: flex;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  background: rgba(196, 90, 60, 0.12);
+  border-left: 3px solid var(--color-terracotta);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+.district-hidden-card__safety-note > svg { color: var(--color-terracotta); flex: none; margin-top: 0.1rem; }
+.district-hidden-card__safety-note p { display: grid; gap: 0.15rem; }
+.district-hidden-card__safety-note strong { color: var(--color-text-primary); }
+
 /* CTA */
 .district-cta {
   padding: var(--space-12) 0 var(--space-20);

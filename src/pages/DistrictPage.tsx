@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, ArrowRight, Compass, ChevronRight, Clock, Calendar } from 'lucide-react';
+import { MapPin, ArrowRight, Compass, ChevronRight, Clock, Calendar, ShieldAlert, Users } from 'lucide-react';
 import { priorityDistricts, sampleDestinations } from '../data/destinations';
 import { sampleHiddenSpots } from '../data/hiddenSpots';
 import { REGION_COLORS } from '../data/regions';
@@ -223,6 +223,14 @@ export default function DistrictPage() {
                     <div className="district-hidden-card__content">
                       <h3 className="district-hidden-card__name">{spot.name}</h3>
                       <p className="district-hidden-card__desc">{spot.description}</p>
+                      <div className="district-hidden-card__meta">
+                        <span><Compass size={13} aria-hidden="true" /> {spot.difficulty}</span>
+                        <span><Users size={13} aria-hidden="true" /> {spot.crowdLevel.replace('-', ' ')} crowds</span>
+                      </div>
+                      <div className="district-hidden-card__safety-note">
+                        <ShieldAlert size={16} aria-hidden="true" />
+                        <p><strong>Safety note</strong>{spot.safetyNote}</p>
+                      </div>
                       <div className="district-hidden-card__why">
                         <strong>Why visit:</strong> {spot.whyVisit}
                       </div>

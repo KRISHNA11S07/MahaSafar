@@ -26,6 +26,7 @@ import { CATEGORY_ICONS } from '../data/categories';
 import { DESTINATION_GALLERIES, getDestinationImage } from '../data/images';
 import SafeImage from '../components/ui/SafeImage';
 import WeatherCard from '../components/ui/WeatherCard';
+import SafetyKit from '../components/safety/SafetyKit';
 import { isPlaceSaved, toggleSavedPlace, SAVED_PLACES_EVENT } from '../lib/savedPlaces';
 import type { Destination } from '../types';
 import './DestinationPage.css';
@@ -314,6 +315,10 @@ export default function DestinationPage() {
 
       <section className="dest-weather container" aria-label="Weather and travel conditions">
         <WeatherCard key={destination.slug} destination={destination} />
+      </section>
+
+      <section className="dest-safety container" aria-label="Safety and emergency kit">
+        <SafetyKit compact coordinates={destination.location.coordinates} categories={destination.categories} />
       </section>
 
       {/* 3. The Story & Essence */}
